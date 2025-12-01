@@ -14,7 +14,7 @@ import plotly.express as px
 # Page configuration
 st.set_page_config(
     page_title="MindGuard AI",
-    page_icon="🧠",
+    page_icon="M",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -224,12 +224,12 @@ CRISIS_RESOURCES = {
         {"name": "SAMHSA National Helpline", "number": "1-800-662-4357", "url": "tel:18006624357"}
     ],
     "coping_techniques": [
-        {"icon": "🌬️", "title": "5-4-3-2-1 Grounding", "desc": "Name 5 things you see, 4 you hear, 3 you touch, 2 you smell, 1 you taste"},
-        {"icon": "🫁", "title": "Box Breathing", "desc": "Inhale 4 sec, hold 4 sec, exhale 4 sec, hold 4 sec"},
-        {"icon": "🧊", "title": "Ice Cube Technique", "desc": "Hold ice in your hand to interrupt distressing thoughts"},
-        {"icon": "📝", "title": "Journaling", "desc": "Write down your thoughts without judgment"},
-        {"icon": "🚶", "title": "Movement", "desc": "Take a short walk, even just around your room"},
-        {"icon": "💧", "title": "Hydrate", "desc": "Drink a glass of cold water slowly"}
+        {"icon": "*", "title": "5-4-3-2-1 Grounding", "desc": "Name 5 things you see, 4 you hear, 3 you touch, 2 you smell, 1 you taste"},
+        {"icon": "*", "title": "Box Breathing", "desc": "Inhale 4 sec, hold 4 sec, exhale 4 sec, hold 4 sec"},
+        {"icon": "*", "title": "Ice Cube Technique", "desc": "Hold ice in your hand to interrupt distressing thoughts"},
+        {"icon": "*", "title": "Journaling", "desc": "Write down your thoughts without judgment"},
+        {"icon": "*", "title": "Movement", "desc": "Take a short walk, even just around your room"},
+        {"icon": "*", "title": "Hydrate", "desc": "Drink a glass of cold water slowly"}
     ],
     "grounding_exercises": [
         "Feel your feet on the ground. Notice the pressure, temperature, texture.",
@@ -340,7 +340,7 @@ def display_crisis_resources():
     """Display crisis resources and coping techniques."""
     st.markdown("""
     <div class="crisis-banner">
-        <h2 style="margin:0; color:white;">⚠️ We're Here For You</h2>
+        <h2 style="margin:0; color:white;">We're Here For You</h2>
         <p style="margin:0.5rem 0 0 0; font-size:1.1rem;">
             If you're in crisis or having thoughts of suicide, please reach out for help immediately.
         </p>
@@ -348,7 +348,7 @@ def display_crisis_resources():
     """, unsafe_allow_html=True)
     
     # Hotlines
-    st.markdown("### 📞 Crisis Hotlines")
+    st.markdown("### Crisis Hotlines")
     cols = st.columns(2)
     for i, hotline in enumerate(CRISIS_RESOURCES["hotlines"]):
         with cols[i % 2]:
@@ -360,7 +360,7 @@ def display_crisis_resources():
             """, unsafe_allow_html=True)
     
     # Coping Techniques
-    st.markdown("### 💪 Coping Techniques")
+    st.markdown("### Coping Techniques")
     for technique in CRISIS_RESOURCES["coping_techniques"]:
         st.markdown(f"""
         <div class="coping-card">
@@ -371,7 +371,7 @@ def display_crisis_resources():
         """, unsafe_allow_html=True)
     
     # Grounding Exercise
-    st.markdown("### 🌍 Grounding Exercise")
+    st.markdown("### Grounding Exercise")
     exercise = st.selectbox(
         "Choose an exercise:",
         CRISIS_RESOURCES["grounding_exercises"],
@@ -387,39 +387,39 @@ def display_crisis_resources():
 def main():
     """Main application."""
     # Header
-    st.markdown('<h1 class="hero-title">🧠 MindGuard AI</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="hero-title">MindGuard AI</h1>', unsafe_allow_html=True)
     st.markdown('<p class="hero-subtitle">AI-Powered Mental Health Text Analysis</p>', unsafe_allow_html=True)
     
     # Sidebar
     with st.sidebar:
-        st.markdown("## ⚙️ Settings")
+        st.markdown("## Settings")
         
         # API Status
         api_status = check_api_health()
         if api_status:
-            st.success("✅ API Connected")
+            st.success("API Connected")
         else:
-            st.error("❌ API Offline")
+            st.error("API Offline")
             st.info("Start the API with:\n```\ncd api && python main.py\n```")
         
         st.markdown("---")
-        st.markdown("## 📊 About")
+        st.markdown("## About")
         st.markdown("""
         **MindGuard AI** uses transformer-based NLP 
         to analyze text for mental health indicators.
         
         **Risk Levels:**
-        - 🟢 Normal
-        - 🟡 Mild Negative  
-        - 🟠 High Negative
-        - 🔴 Crisis-Risk
+        - Normal (Green)
+        - Mild Negative (Yellow)
+        - High Negative (Orange)
+        - Crisis-Risk (Red)
         
-        ⚠️ This is a support tool, not a replacement 
+        This is a support tool, not a replacement 
         for professional mental health care.
         """)
         
         st.markdown("---")
-        st.markdown("## 🔗 Resources")
+        st.markdown("## Resources")
         st.markdown("[SAMHSA](https://www.samhsa.gov/)")
         st.markdown("[NAMI](https://www.nami.org/)")
         st.markdown("[Mental Health America](https://mhanational.org/)")
@@ -428,7 +428,7 @@ def main():
     col1, col2 = st.columns([3, 2])
     
     with col1:
-        st.markdown("### 💬 Share Your Thoughts")
+        st.markdown("### Share Your Thoughts")
         
         # Text input
         user_text = st.text_area(
@@ -440,9 +440,9 @@ def main():
         
         col_btn1, col_btn2 = st.columns([1, 3])
         with col_btn1:
-            analyze_btn = st.button("🔍 Analyze", use_container_width=True)
+            analyze_btn = st.button("Analyze", use_container_width=True)
         with col_btn2:
-            clear_btn = st.button("🗑️ Clear", use_container_width=True)
+            clear_btn = st.button("Clear", use_container_width=True)
         
         if clear_btn:
             st.rerun()
@@ -489,7 +489,7 @@ def main():
         if st.session_state.result and 'error' not in st.session_state.result:
             result = st.session_state.result
             
-            st.markdown("### 📊 Risk Assessment")
+            st.markdown("### Risk Assessment")
             
             # Risk gauge
             st.plotly_chart(
@@ -499,14 +499,14 @@ def main():
             )
             
             # Probability chart
-            st.markdown("### 📈 Class Probabilities")
+            st.markdown("### Class Probabilities")
             st.plotly_chart(
                 create_probability_chart(result['all_probabilities']),
                 use_container_width=True,
                 config={'displayModeBar': False}
             )
         else:
-            st.markdown("### 📊 Risk Assessment")
+            st.markdown("### Risk Assessment")
             st.info("Enter text and click 'Analyze' to see results")
     
     # Crisis resources (show when crisis detected)
@@ -520,10 +520,10 @@ def main():
     st.markdown("---")
     st.markdown("""
     <div style="text-align:center; color:#999; padding:1rem;">
-        <p style="font-size:1.1rem; margin-bottom:0.5rem;">🧠 MindGuard AI v1.0 | Built with ❤️ for mental health awareness</p>
+        <p style="font-size:1.1rem; margin-bottom:0.5rem;">MindGuard AI v1.0 | Built for mental health awareness</p>
         <p style="font-size:1rem; color:#00d9ff; font-weight:600; margin-bottom:0.5rem;">Made by Jalal Diab</p>
         <p style="font-size:0.85rem; color:#666;">
-            ⚠️ <strong>Disclaimer:</strong> This tool is for educational purposes only and should not replace 
+            <strong>Disclaimer:</strong> This tool is for educational purposes only and should not replace 
             professional mental health diagnosis or treatment. If you're in crisis, please contact emergency services.
         </p>
     </div>

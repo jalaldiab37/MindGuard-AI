@@ -264,3 +264,4 @@ def load_model(model_path: str, device: str = None) -> Tuple[MindGuardClassifier
     return model, tokenizer
 
 
+

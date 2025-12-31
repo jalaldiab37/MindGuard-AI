@@ -1,148 +1,184 @@
 # MindGuard AI
 
-**MindGuard AI** is a transformer-based NLP system designed to classify mental health text into four risk levels: Normal, Mild Negative, High Negative, and Crisis-Risk. The system provides real-time sentiment analysis with confidence scores, helping identify potential mental health concerns in text data.
+A transformer-powered sentiment analysis system built to detect emotional tone and potential crisis-risk in text. Using BERT-based classification, it outputs four risk levels with confidence percentages and includes a live UI for testing text inputs. Designed to explore early detection potential in mental health communication.
 
-## Overview & Purpose
+---
 
-Mental health awareness is crucial in today's digital age. MindGuard AI leverages state-of-the-art transformer models to analyze text for mental health indicators, providing:
+## Features
 
-- **4-class risk classification** with confidence scores
-- **Real-time text analysis** as users type
-- **Crisis detection** with automatic resource display
-- **Logging system** for high-risk content review
-- **Beautiful, accessible UI** with crisis resources
+- **4-Class Risk Classification** - Normal, Mild Negative, High Negative, Crisis-Risk
+- **Real-Time Analysis** - Instant feedback as you type
+- **Confidence Scores** - Probability percentages for each classification
+- **Crisis Resources** - Automatic display of hotlines and coping techniques when high risk detected
+- **Modern UI** - Clean, accessible dark-themed interface
+- **API Ready** - FastAPI backend for integration
 
-This tool is intended for research and educational purposes, helping developers understand how NLP can be applied to mental health applications.
+---
 
-## Architecture
+## Live Demo
 
-### Model Architecture
-- **Base Model**: DistilBERT/BERT/RoBERTa (configurable)
-- **Classification Head**: 2-layer MLP with dropout
-- **Output**: Softmax over 4 classes + confidence score
-- **Risk Score**: Weighted probability toward crisis class
+**Try it now:** [https://unstrident-contessa-preacquisitively.ngrok-free.dev](https://unstrident-contessa-preacquisitively.ngrok-free.dev)
 
-### Classification Labels
-| Level | Label | Description | Color |
-|-------|-------|-------------|-------|
-| 0 | Normal | No concerning indicators | Green |
-| 1 | Mild Negative | Some negative sentiment | Yellow |
-| 2 | High Negative | Significant distress | Orange |
-| 3 | Crisis-Risk | Immediate attention needed | Red |
+---
+
+## Classification Levels
+
+| Level | Label | Description | Indicators |
+|-------|-------|-------------|------------|
+| 0 | Normal | No concerning indicators | Positive language, neutral tone |
+| 1 | Mild Negative | Some negative sentiment | Stress, worry, frustration |
+| 2 | High Negative | Significant distress | Hopelessness, depression, isolation |
+| 3 | Crisis-Risk | Immediate attention needed | Self-harm, suicidal ideation |
+
+---
+
+## Tech Stack
+
+- **Frontend:** Streamlit
+- **Backend:** FastAPI
+- **ML Model:** DistilBERT / BERT / RoBERTa (Transformers)
+- **Language:** Python 3.9+
+
+---
 
 ## Project Structure
 
 ```
 mindguard-ai/
-├── model/
-│   ├── classifier.py      # Transformer classifier model
-│   ├── train.py           # Training script
-│   ├── evaluate.py        # Evaluation utilities
-│   └── __init__.py
-├── data/
-│   ├── preprocessing.py   # Text cleaning & tokenization
-│   ├── dataset.py         # PyTorch Dataset classes
-│   └── __init__.py
-├── notebooks/
-│   └── demo.ipynb         # Interactive demo notebook
 ├── api/
-│   ├── main.py            # FastAPI backend
-│   └── __init__.py
+│   └── main.py              # FastAPI backend
+├── data/
+│   ├── preprocessing.py     # Text cleaning & tokenization
+│   └── dataset.py           # PyTorch Dataset classes
+├── model/
+│   ├── classifier.py        # Transformer classifier
+│   ├── train.py             # Training script
+│   └── evaluate.py          # Evaluation utilities
 ├── frontend/
-│   └── app.py             # Streamlit UI
+│   └── app.py               # Streamlit UI (with API)
+├── notebooks/
+│   └── demo.ipynb           # Interactive demo
+├── streamlit_app.py         # Standalone Streamlit app
 ├── requirements.txt
-└── run.py                 # Quick-start launcher
+└── run.py                   # Quick-start launcher
 ```
+
+---
 
 ## Quick Start
 
-### 1. Installation
+### Installation
 
 ```bash
-cd mindguard-ai
+git clone https://github.com/jalaldiab37/MindGuard-AI.git
+cd MindGuard-AI
 
 # Create virtual environment
 python -m venv venv
-venv\Scripts\activate  # Windows
-# source venv/bin/activate  # Linux/Mac
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate     # Windows
 
 # Install dependencies
 pip install -r requirements.txt
-
-# Download NLTK data
-python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('wordnet')"
 ```
 
-### 2. Train the Model
+### Run Standalone App
+
+```bash
+streamlit run streamlit_app.py
+```
+
+### Run with API Backend
+
+```bash
+# Terminal 1: Start API
+python -m uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+
+# Terminal 2: Start Frontend
+streamlit run frontend/app.py
+```
+
+### Train Custom Model
 
 ```bash
 python model/train.py --epochs 5 --batch_size 16 --model_name distilbert-base-uncased
 ```
 
-### 3. Start the API
+---
 
-```bash
-cd mindguard-ai
-python -m uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
-```
-
-### 4. Launch the UI
-
-```bash
-streamlit run frontend/app.py --server.port 8501
-```
-
-## API Endpoints
+## API Reference
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/predict` | POST | Classify single text |
-| `/classify_stream` | POST | Stream analysis (SSE) |
+| `/predict` | POST | Classify text, returns risk level + confidence |
+| `/classify_stream` | POST | Stream analysis (Server-Sent Events) |
 | `/batch_predict` | POST | Classify multiple texts |
 | `/health` | GET | Health check |
 | `/labels` | GET | Get label definitions |
 
 ### Example Request
+
 ```bash
 curl -X POST "https://your-api-url.com/predict" \
   -H "Content-Type: application/json" \
-  -d '{"text": "I feel hopeless today"}'
+  -d '{"text": "I am feeling hopeless today"}'
 ```
 
 ### Example Response
+
 ```json
 {
   "class_id": 2,
   "class_label": "High Negative",
   "confidence": 0.78,
   "risk_score": 0.65,
-  "risk_color": "#FF9800"
+  "all_probabilities": {
+    "Normal": 0.05,
+    "Mild Negative": 0.10,
+    "High Negative": 0.70,
+    "Crisis-Risk": 0.15
+  }
 }
 ```
 
-## Configuration
+---
 
-Key training parameters (adjustable in `train.py`):
-- `--model_name`: `distilbert-base-uncased`, `bert-base-uncased`, `roberta-base`
-- `--epochs`: 3-5 recommended
-- `--batch_size`: 16 (adjust based on GPU memory)
-- `--learning_rate`: 2e-5
-- `--max_length`: 256 tokens
+## Training Configuration
 
-## Ethical Usage Warning
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `--model_name` | distilbert-base-uncased | Base transformer model |
+| `--epochs` | 5 | Training epochs |
+| `--batch_size` | 16 | Batch size |
+| `--learning_rate` | 2e-5 | Learning rate |
+| `--max_length` | 256 | Max token length |
 
-**IMPORTANT**: This tool is for **educational and research purposes only**.
+---
 
-- NOT a replacement for professional mental health diagnosis
-- NOT suitable for making clinical decisions
-- NOT validated for real-world mental health assessment
+## Crisis Resources
 
-**If you or someone you know is in crisis:**
-- Call **988** (Suicide & Crisis Lifeline)
-- Text **HOME to 741741** (Crisis Text Line)
-- Call **1-800-273-8255** (National Suicide Prevention Lifeline)
+If you or someone you know is in crisis:
 
-This model may produce incorrect classifications. High-risk predictions should always be reviewed by qualified professionals. The developers assume no liability for decisions made based on this tool's output.
+| Resource | Contact |
+|----------|---------|
+| 988 Suicide & Crisis Lifeline | Call or Text: **988** |
+| Crisis Text Line | Text **HOME** to **741741** |
+| National Suicide Prevention | **1-800-273-8255** |
+| SAMHSA National Helpline | **1-800-662-4357** |
+
+---
+
+## Disclaimer
+
+**This tool is for educational and research purposes only.**
+
+- Not a replacement for professional mental health diagnosis
+- Not validated for clinical use
+- Not suitable for making medical decisions
+
+High-risk predictions should always be reviewed by qualified mental health professionals. The developers assume no liability for decisions made based on this tool's output.
+
+---
 
 ## License
 
@@ -150,6 +186,12 @@ MIT License
 
 ---
 
+## Author
+
 **Made by Jalal Diab**
 
-Built for mental health awareness. Remember: You are not alone. Help is available.
+Built for mental health awareness.
+
+---
+
+*Remember: You are not alone. Help is available.*

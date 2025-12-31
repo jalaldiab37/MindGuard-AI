@@ -401,3 +401,4 @@ if __name__ == "__main__":
         print(f"Crisis indicators: {indicators['crisis_indicators']}")
 
 
+

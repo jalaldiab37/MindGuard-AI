@@ -21,17 +21,27 @@ Built with PyTorch, Hugging Face Transformers, FastAPI, and Streamlit.
 
 ## Live Demo
 
-**Try the live application:** [https://unstrident-contessa-preacquisitively.ngrok-free.dev](https://unstrident-contessa-preacquisitively.ngrok-free.dev)
+**Try the live application:** [https://jalaldiab37-mindguard-ai.streamlit.app](https://jalaldiab37-mindguard-ai.streamlit.app)
 
 ---
 
 ## Screenshots
 
-| Dashboard | Risk Assessment | Crisis Resources |
-|-----------|-----------------|------------------|
-| ![Dashboard](https://via.placeholder.com/300x200?text=Dashboard) | ![Assessment](https://via.placeholder.com/300x200?text=Risk+Assessment) | ![Resources](https://via.placeholder.com/300x200?text=Crisis+Resources) |
+### Main Dashboard
+![Dashboard](screenshots/dashboard.png)
+*Clean, modern interface for text input and analysis*
 
-*Screenshots show the main interface, classification results with probability bars, and automatic crisis resource display.*
+### Crisis-Risk Detection
+![Risk Assessment](screenshots/risk-assessment.png)
+*Real-time classification with confidence scores and probability distribution*
+
+### Crisis Resources
+![Crisis Resources](screenshots/crisis-resources.png)
+*Automatic display of hotlines and coping techniques for high-risk classifications*
+
+### Coping Techniques
+![Coping Techniques](screenshots/coping-techniques.png)
+*Evidence-based coping strategies displayed when needed*
 
 ---
 

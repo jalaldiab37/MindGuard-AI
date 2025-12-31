@@ -104,9 +104,20 @@ streamlit run frontend/app.py --server.port 8501
 
 ### Example Request
 ```bash
-curl -X POST "http://localhost:8000/predict" \
+curl -X POST "https://your-api-url.com/predict" \
   -H "Content-Type: application/json" \
   -d '{"text": "I feel hopeless today"}'
+```
+
+### Example Response
+```json
+{
+  "class_id": 2,
+  "class_label": "High Negative",
+  "confidence": 0.78,
+  "risk_score": 0.65,
+  "risk_color": "#FF9800"
+}
 ```
 
 ## Configuration

@@ -2,7 +2,7 @@
 
 **A transformer-based NLP system for mental health text classification and risk assessment.**
 
-MindGuard AI analyzes text input to classify emotional tone across four risk levels—Normal, Mild Negative, High Negative, and Crisis-Risk—using fine-tuned BERT-family models. The system outputs confidence scores and probability distributions, enabling early identification of concerning language patterns in digital communication.
+MindGuard AI analyzes text input to classify emotional tone across four risk levels—Normal, Mild Negative, High Negative, and Crisis Risk—using fine tuned BERT family models. The system outputs confidence scores and probability distributions, enabling early identification of concerning language patterns in digital communication.
 
 Built with PyTorch, Hugging Face Transformers, FastAPI, and Streamlit.
 
@@ -19,9 +19,6 @@ Built with PyTorch, Hugging Face Transformers, FastAPI, and Streamlit.
 
 ---
 
-## Live Demo
-
-**Try the live application:** [https://jalaldiab37-mindguard-ai.streamlit.app](https://jalaldiab37-mindguard-ai.streamlit.app)
 
 ---
 
